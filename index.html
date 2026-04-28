@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Groove — Music Player</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ===== TOPBAR ===== -->
+  <header class="topbar">
+    <div class="logo">Gro<span>o</span>ve</div>
+
+    <div class="search-bar">
+      <span class="search-icon">⌕</span>
+      <input type="text" id="searchInput" placeholder="Search songs, artists, albums…" autocomplete="off">
+    </div>
+
+    <nav class="nav-cats">
+      <button class="cat-btn active" data-cat="all">All</button>
+      <button class="cat-btn" data-cat="Jazz">Jazz</button>
+      <button class="cat-btn" data-cat="Soul">Soul</button>
+      <button class="cat-btn" data-cat="Blues">Blues</button>
+      <button class="cat-btn" data-cat="Folk">Folk</button>
+      <button class="cat-btn" data-cat="Classical">Classical</button>
+    </nav>
+  </header>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar">
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Library</div>
+
+      <div class="playlist-item active" data-playlist="all">
+        <div class="pl-icon" style="background:rgba(239,159,39,0.15)">🎵</div>
+        <div class="pl-info">
+          <div class="pl-name">All Tracks</div>
+          <div class="pl-count">24 songs</div>
+        </div>
+      </div>
+
+      <div class="playlist-item" data-playlist="favorites">
+        <div class="pl-icon" style="background:rgba(216,90,48,0.15)">♥</div>
+        <div class="pl-info">
+          <div class="pl-name">Favourites</div>
+          <div class="pl-count">8 songs</div>
+        </div>
+      </div>
+
+      <div class="playlist-item" data-playlist="recent">
+        <div class="pl-icon" style="background:rgba(99,153,34,0.15)">🕐</div>
+        <div class="pl-info">
+          <div class="pl-name">Recently Played</div>
+          <div class="pl-count">12 songs</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section">
+      <div class="sidebar-label">Playlists</div>
+
+      <div class="playlist-item" data-playlist="late-night">
+        <div class="pl-icon" style="background:rgba(127,119,221,0.15)">🌙</div>
+        <div class="pl-info">
+          <div class="pl-name">Late Night Sessions</div>
+          <div class="pl-count">9 songs</div>
+        </div>
+      </div>
+
+      <div class="playlist-item" data-playlist="morning">
+        <div class="pl-icon" style="background:rgba(239,159,39,0.15)">☀</div>
+        <div class="pl-info">
+          <div class="pl-name">Morning Rituals</div>
+          <div class="pl-count">6 songs</div>
+        </div>
+      </div>
+
+      <div class="playlist-item" data-playlist="focus">
+        <div class="pl-icon" style="background:rgba(56,130,221,0.15)">◎</div>
+        <div class="pl-info">
+          <div class="pl-name">Deep Focus</div>
+          <div class="pl-count">7 songs</div>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content">
+    <div class="section-header">
+      <div>
+        <div class="section-title" id="sectionTitle">All Tracks</div>
+        <div class="section-subtitle" id="sectionSubtitle">24 songs · 1h 32m</div>
+      </div>
+    </div>
+
+    <table class="track-table">
+      <thead>
+        <tr>
+          <th style="width:40px">#</th>
+          <th>Title</th>
+          <th>Album</th>
+          <th>Genre</th>
+          <th style="text-align:right">Time</th>
+        </tr>
+      </thead>
+      <tbody id="trackList"></tbody>
+    </table>
+
+    <div id="noResults" class="no-results" style="display:none">
+      <div class="nr-icon">♪</div>
+      <div class="nr-title">Nothing found</div>
+      <div class="nr-sub">Try a different search or category</div>
+    </div>
+  </main>
+
+  <!-- ===== PLAYER BAR ===== -->
+  <footer class="player-bar">
+
+    <!-- Vinyl record -->
+    <div class="vinyl-wrap">
+      <div class="vinyl" id="vinyl">
+        <div class="vinyl-groove"></div>
+        <div class="vinyl-center" id="vinylEmoji">🎷</div>
+      </div>
+    </div>
+
+    <!-- Now playing -->
+    <div class="now-playing">
+      <div class="np-info">
+        <div class="np-title" id="npTitle">—</div>
+        <div class="np-artist" id="npArtist">Select a track to begin</div>
+      </div>
+    </div>
+
+    <!-- Playback controls -->
+    <div class="controls-center">
+      <div class="control-buttons">
+        <button class="ctrl-btn" id="shuffleBtn" title="Shuffle">⇄</button>
+        <button class="ctrl-btn" id="prevBtn"    title="Previous">⏮</button>
+        <button class="ctrl-btn play-pause" id="playBtn" title="Play / Pause">▶</button>
+        <button class="ctrl-btn" id="nextBtn"    title="Next">⏭</button>
+        <button class="ctrl-btn" id="repeatBtn"  title="Repeat">↻</button>
+      </div>
+      <div class="progress-wrap">
+        <span class="time-label" id="currentTime">0:00</span>
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill" style="width:0%"></div>
+        </div>
+        <span class="time-label end" id="totalTime">0:00</span>
+      </div>
+    </div>
+
+    <!-- Volume -->
+    <div class="volume-wrap">
+      <span class="vol-icon" id="volIcon">♪</span>
+      <input type="range" class="vol-slider" id="volSlider" min="0" max="100" value="75" step="1">
+    </div>
+
+  </footer>
+</div>
+
+<!-- JavaScript -->
+<script src="script.js"></script>
+</body>
+</html>
